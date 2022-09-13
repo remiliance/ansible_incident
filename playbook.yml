@@ -8,13 +8,17 @@
     user: ubuntu
     domain: local.dev
     repo: git@github.com:remiliance/incident.git
+    dest_logstash_path: /home/{{ user }}/logstash/
+    src_logstash_path: /home/remi/Documents/ansible/ansible_incident/roles/logstash/vars/
     #repo: https://github.com/remiliance/Calculatrice.git
     registry: registry.gitlab.com/remiliance/registrydockerimage
-
+  vars_files:
+      - ./roles/logstash/vars/logstash-my-secrets.yml
   roles:
     #- utils
     #- user
     #- nginx
-    - git
+    #- git
+    - logstash
 
 ...

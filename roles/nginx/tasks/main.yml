@@ -1,8 +1,4 @@
 ---
-   - name: install nginx
-     become: yes
-     apt: name=nginx state=latest
-
    - name: Start nginx
      become: yes
      service: name=nginx state=started enabled=true

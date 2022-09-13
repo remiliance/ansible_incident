@@ -1,0 +1,56 @@
+---
+  - name: checking if the folder logstash exists (meaning alreday installed)
+    stat:
+       path: "{{ dest_logstash_path }}"
+    register: logstash_status
+
+  - name: push logstash tar gz
+    become: yes
+    copy:
+      src: "{{ src_logstash_path }}/logstash-8.4.1-linux-x86_64.tar.gz"
+      dest: /home/ubuntu/
+      owner: ubuntu
+      group: ubuntu
+      mode: 0644
+      force: no
+
+  - name: creation du dossier logstash
+    become: yes
+    file: path={{ dest_logstash_path }} state=directory owner={{ user }}
+    when: logstash_status.stat.exists == False
+
+  - name: detar logstash tar gz dans le dossier logstash
+    unarchive:
+       src: /home/ubuntu/logstash-8.4.1-linux-x86_64.tar.gz
+       dest: "{{ dest_logstash_path }}"
+       remote_src: yes
+    when: logstash_status.stat.exists == False
+
+  - name: push logstash config&project files
+    become: yes
+    copy:
+       src: "{{ src_logstash_path }}myconf_logstash"
+       dest: "{{ dest_logstash_path }}"
+       owner: ubuntu
+       group: ubuntu
+       mode: 0755
+       force: no ### ATTENTION ###
+
+  - name: create env file
+    template: src=templates/.env.j2 dest="{{ dest_logstash_path }}/myconf_logstash/.env"
+
+  - name: shell - export env var ## ne marche pas
+    shell:
+      chdir: "{{ dest_logstash_path }}myconf_logstash/"
+      cmd: "export $(grep -v '^#' .env | xargs)"
+
+  - name: Check env variables (print values)
+    shell:
+      cmd: "echo LSSETTINGS DIR : $LS_SETTINGS_DIR - LOGSTASH_PATH: $LOGSTASH_PATH"
+    register: os_info
+  - debug: msg="{{os_info.stdout_lines}}"
+
+  - name: print vault
+    shell:
+      cmd: ""
+  - debug: msg="{{ author }}"

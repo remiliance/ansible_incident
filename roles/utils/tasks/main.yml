@@ -1,9 +1,11 @@
 ---
-   - name : install basics
-     apt: name:"{{ item }}" update_cache:yes state=latest
-     with_items:
-      - vim
-      - git
-      - curl
-      - docker
-      - docker-compose
+   - name: install basics
+     become: yes
+     apt:
+       name:
+          - vim
+          - git
+          - curl
+          - docker
+          - docker-compose
+       state: latest

@@ -1,0 +1,6 @@
+# init
+--- 
+- 
+  path.config: "/home/remi/Documents/ansible/ansible_incident/roles/logstash/vars/myconf_logstash/{input,output}.conf"
+  pipeline.id: print_message
+  pipeline.workers: 1 
