@@ -14,6 +14,8 @@
     registry: registry.gitlab.com/remiliance/registrydockerimage
   vars_files:
       - ./roles/logstash/vars/logstash-my-secrets.yml
+  environment:
+    MY_ENV_VARIABLE: whatever_value
   roles:
     #- utils
     #- user

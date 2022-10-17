@@ -1,4 +1,4 @@
 ---
   - name: clone du depot git remi {{ repo }}
     become: yes
-    git: dest=/home/{{ user }}/git clone=yes repo={{ repo }} accept_hostkey=yes key_file=/home/ubuntu/id_rsa_git
+    git: dest=/home/{{ user }}/git clone=yes repo={{ repo }} accept_hostkey=yes key_file=/home/ubuntu/id_rsa_git force=yes

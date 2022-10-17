@@ -26,31 +26,55 @@
        remote_src: yes
     when: logstash_status.stat.exists == False
 
-  - name: push logstash config&project files
-    become: yes
-    copy:
-       src: "{{ src_logstash_path }}myconf_logstash"
-       dest: "{{ dest_logstash_path }}"
-       owner: ubuntu
-       group: ubuntu
-       mode: 0755
-       force: no ### ATTENTION ###
+  #- name: push logstash config&project files
+  #  become: yes
+  #  copy:
+  #     src: "{{ src_logstash_path }}myconf_logstash"
+  #     dest: "{{ dest_logstash_path }}"
+  #     owner: ubuntu
+  #     group: ubuntu
+  #     mode: 0755
+  #     force: no ### ATTENTION ###
 
   - name: create env file
     template: src=templates/.env.j2 dest="{{ dest_logstash_path }}/myconf_logstash/.env"
 
-  - name: shell - export env var ## ne marche pas
-    shell:
-      chdir: "{{ dest_logstash_path }}myconf_logstash/"
-      cmd: "export $(grep -v '^#' .env | xargs)"
+  #- name: shell - export env var ## ne marche pas
+  #  shell: "{{ dest_logstash_path }}myconf_logstash/.env"
+  #- debug: msg="{{ lookup('env','$LS_SETTINGS_DIR', USR='ubuntu2') }} is an environment variable $LS_SETTINGS_DIR"
+
+  #- name: shell - export LS_SETTINGS_DIR ## ne marche pas
+  #  shell: "export LS_SETTINGS_DIR=/home/ubuntu/logstash/myconf_logstash/config"
+  #  with_items: "{{ lookup('file', '{{ dest_logstash_path }}/myconf_logstash/.env').splitlines() }}"
+
+  - name: ajout d'une ligne dans le .profile
+    lineinfile:
+      path: /home/{{ user }}/.profile
+      line: "export {{ item }}"
+    with_items: "{{ lookup('file', 'templates/.env.j2').splitlines() }}"
+
+  - name: refresh source .env
+    become: yes
+    shell: source /home/{{ user }}/.profile
+    args:
+     executable: /bin/bash
+
+
+  - name: Echo my_env_var  ##
+    user: ubuntu
+    become: yes
+    shell: "echo $LS_SETTINGS_DIR"
 
   - name: Check env variables (print values)
-    shell:
-      cmd: "echo LSSETTINGS DIR : $LS_SETTINGS_DIR - LOGSTASH_PATH: $LOGSTASH_PATH"
+    shell: "echo $LS_SETTINGS_DIR"
     register: os_info
   - debug: msg="{{os_info.stdout_lines}}"
 
   - name: print vault
     shell:
-      cmd: ""
+      cmd: "echo vault"
   - debug: msg="{{ author }}"
+
+  - name: create logstash keystore
+    shell:
+      cmd: "{{ dest_logstash_path }}logstash-8.4.1/bin/logstash-keystore create --path.settings $LS_SETTINGS_DIR"
