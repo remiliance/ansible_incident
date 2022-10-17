@@ -4,15 +4,15 @@
        path: "{{ dest_logstash_path }}"
     register: logstash_status
 
-  - name: push logstash tar gz
-    become: yes
-    copy:
-      src: "{{ src_logstash_path }}/logstash-8.4.1-linux-x86_64.tar.gz"
-      dest: /home/ubuntu/
-      owner: ubuntu
-      group: ubuntu
-      mode: 0644
-      force: no
+  #- name: push logstash tar gz
+  #  become: yes
+  #  copy:
+  #    src: "{{ src_logstash_path }}/logstash-8.4.1-linux-x86_64.tar.gz"
+  #    dest: /home/ubuntu/
+  #    owner: ubuntu
+  #    group: ubuntu
+  #    mode: 0644
+  #    force: no
 
   - name: creation du dossier logstash
     become: yes
