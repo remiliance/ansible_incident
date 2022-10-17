@@ -53,10 +53,6 @@
       line: "export {{ item }}"
     with_items: "{{ lookup('file', 'templates/.env.j2').splitlines() }}"
 
-  - name: refresh source .env
-    become: yes
-    shell: "source /home/{{ user }}/.profile"
-
   - name: echo my_env_var
     shell: "echo $LS_SETTINGS_DIR"
 
