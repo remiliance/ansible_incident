@@ -1,4 +1,10 @@
 ---
+
+  - name: Delete content repo git
+    file:
+      state: absent
+      path: /home/{{ user }}/git
+
   - name: clone du depot git remi {{ repo }}
     become: yes
-    git: dest=/home/{{ user }}/git clone=yes repo={{ repo }} accept_hostkey=yes key_file=/home/ubuntu/id_rsa_git force=yes
+    git: dest=/home/{{ user }}/git clone=yes repo={{ repo }} accept_hostkey=yes key_file=/home/ubuntu/id_rsa_git force=yes recursive=yes

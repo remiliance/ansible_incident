@@ -11,7 +11,7 @@
     dest_logstash_path: /home/{{ user }}/logstash/
     src_logstash_path: /home/remi/Documents/ansible/ansible_incident/roles/logstash/vars/
     #repo: https://github.com/remiliance/Calculatrice.git
-    registry: registry.gitlab.com/remiliance/registrydockerimage
+    registry: registry.gitlab.com
   vars_files:
       - ./roles/logstash/vars/logstash-my-secrets.yml
       - ./roles/dep_incident/vars/dep_incident-secrets.yml
