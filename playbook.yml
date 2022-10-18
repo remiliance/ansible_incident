@@ -17,10 +17,10 @@
   environment:
     MY_ENV_VARIABLE: whatever_value
   roles:
-    #- utils
+    - utils
     #- user
     #- nginx
-    #- git
-    - logstash
+    - git
+    #- logstash
 
 ...
