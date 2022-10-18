@@ -8,7 +8,7 @@
 
   - name: Pull Image Project Incident Latest
     docker_image:
-      name: "{{ registry }}"/remiliance/registrydockerimage/projet_incident
+      name: "{{ registry }}/remiliance/registrydockerimage/projet_incident"
       source: pull
       tag: version-76
       # ici mettre une version sur git (latest ne marche pas!)
