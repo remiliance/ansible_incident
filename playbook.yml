@@ -14,13 +14,15 @@
     registry: registry.gitlab.com/remiliance/registrydockerimage
   vars_files:
       - ./roles/logstash/vars/logstash-my-secrets.yml
+      - ./roles/dep_incident/vars/dep_incident-secrets.yml
   environment:
     MY_ENV_VARIABLE: whatever_value
   roles:
-    - utils
+    #- utils
     #- user
     #- nginx
     - git
+    - dep_incident
     #- logstash
 
 ...

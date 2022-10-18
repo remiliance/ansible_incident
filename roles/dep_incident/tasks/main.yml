@@ -1,0 +1,21 @@
+---
+  - name: Log into private registry git lab and force re-authorization
+    docker_login:
+      registry: registry.gitlab.com
+      username: remiliance
+      password: "{{ vault_git_password }}"
+      reauthorize: yes
+
+  #- name: Pull Image Project Incident Latest
+  #  docker_image:
+  #    name: registry.gitlab.com/remiliance/registrydockerimage/projet_incident
+  #    source: pull
+  #    tag: version-76
+      # ici mettre une version sur git (latest ne marche pas!)
+
+  - name: Run `docker-compose up`
+    docker_compose:
+      project_src:  /home/{{ user }}/git/projet_incident/
+      files:
+        - docker-compose_full.yml
+      build: false

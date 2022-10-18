@@ -1,7 +1,10 @@
 ansible-playbook  -i inventaire.ini playbook.yml
 sudo ansible-playbook  -i inventaire.ini playbook.yml --vault-password-file=.vault_pass
+OU
+avec inventaire2.ini
+
 
 Pour editer le vault ansible de logtash :
 ~/Documents/ansible/ansible_incident/roles/logstash/vars
-=> ansible-vault view logstash-my-secrets.yml OU edit
+=> ansible-vault edit logstash-my-secrets.yml OU edit
 (il faut avoir au préalable installer pip install ansible-vault avec aussi un venv)
