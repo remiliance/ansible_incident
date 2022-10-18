@@ -1,9 +1,9 @@
 ---
 
-  - name: Delete content repo git
-    file:
-      state: absent
-      path: /home/{{ user }}/git
+  #- name: Delete content repo git
+  #  file:
+  #    state: absent
+  #    path: /home/{{ user }}/git
 
   - name: clone du depot git remi {{ repo }}
     become: yes
